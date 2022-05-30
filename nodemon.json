@@ -1,0 +1,8 @@
+{
+    "env": {
+        "ENVIRONMENT": "development",
+        "STEAM_BASE": "http://192.168.178.59:8081",
+        "PORT": 8080,
+        "HOST": "192.168.178.25"
+    }
+}
