@@ -1,0 +1,8 @@
+{
+    "name": "Shop",
+    "author": "SteffTek",
+    "description": "Shop",
+    "version": "0.0.1",
+    "main": "index.js",
+    "view": "index.html"
+}

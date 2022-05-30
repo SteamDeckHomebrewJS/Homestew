@@ -3,14 +3,14 @@
         <!-- Include Header -->
         <%- include('../layout/header') %>
         <!-- Set Title -->
-        <title>Homestew</title>
+        <title><%- plugin.NAME %></title>
         <!-- Init Script needed for identifying Plugins -->
         <script>
             // Set Plugin Name for the current page
-            const PLUGIN_NAME = null;
+            const PLUGIN_NAME = <%= plugin.NAME %>;
         </script>
     </head>
     <body>
-        <h1>Hallo</h1>
+        <%- plugin.OUTPUT %>
     </body>
 </html>

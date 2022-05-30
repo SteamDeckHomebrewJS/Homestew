@@ -7,13 +7,13 @@
 /**
  * Refresh current View
  */
-const refreshView = () => {
+const refreshView = async () => {
     // Get iframe
     let iframe = document.getElementById("plugins");
     // Check
     if(!iframe) return;
     // Refresh iframe
-    iframe.src = iframe.src;
+    iframe.contentWindow.body.innerHTML = fetch(`${getBaseURL()}`).then(res => res.text());
 }
 
 /**

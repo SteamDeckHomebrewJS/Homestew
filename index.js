@@ -14,7 +14,7 @@ const express = require('express');
 /**
  * Libs & Source
  */
-// const Plugin = require('./lib/Plugin.js');
+const PluginBase = require('./lib/PluginBase.js');
 const Injection = require('./src/injection');
 
 /**
@@ -121,5 +121,5 @@ app.listen(app.get("PORT"), () => {
  * Export for use in Plugins
  */
 module.exports = {
-    
+    PluginBase
 }
