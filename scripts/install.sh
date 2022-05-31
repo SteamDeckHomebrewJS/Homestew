@@ -25,14 +25,14 @@ systemctl disable homestew 2> /dev/null
 rm -f /etc/systemd/system/homestew.service
 cat > /etc/systemd/system/homestew.service <<- EOM
 [Unit]
-Description=SteamDeck Plugin Loader
+Description=SteamDeck Homestew Plugin Loader
 [Service]
 Type=simple
 User=root
 Restart=always
 ExecStart=/home/deck/homestew/service/Homestew
 WorkingDirectory=/home/deck/homestew/service
-Environment=PATH=/home/deck/homestew/plugins
+Environment=HOME_PATH=/home/deck/homestew
 [Install]
 WantedBy=multi-user.target
 EOM
