@@ -79,9 +79,12 @@ class Homebrew {
         };
 
         /**
-         * Check if code is still injected, if not, reinject
+         * @description Check if code is still injected, if not, reinject
          */
         this.#reinjection = setInterval(async () => {
+            // Fetching Tabs
+            console.log("Fetching tabs...");
+            await this.injection.loadTabs();
             // Get Tab
             const quickAccess = this.injection.getTab("QuickAccess");
             // Check if Tab is there
@@ -90,7 +93,8 @@ class Homebrew {
             const hasElement = await quickAccess.hasElement("plugins");
             if(hasElement) return;
             // Reinject
-            quickAccess(this.injectCode());
+            console.log("Reinjecting Code in QuickAccess Menu...");
+            quickAccess.injectCode();
         }, 1000);
     }
 

@@ -38,6 +38,8 @@ module.exports = class Injection {
 
         // Get tabs
         data.forEach(tabData => {
+            // Check if Tab is already processed
+            if(this.getTabById(tabData.id)) return;
             console.log(`Processing Tab ${tabData.title}`);
             // Create new Tab
             const tab = new Tab(tabData.id, tabData.type, tabData.title, tabData.url, tabData.webSocketDebuggerUrl);
@@ -60,5 +62,14 @@ module.exports = class Injection {
      */
     getTab(title) {
         return this.#tabs.find(tab => tab.title === title);
+    }
+
+    /**
+     * @description Get tab by id
+     * @param {string} id id of tab
+     * @returns {Tab} tab
+     */
+    getTabById(id) {
+        return this.#tabs.find(tab => tab.id === id);
     }
 }
