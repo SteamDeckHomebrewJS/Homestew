@@ -1,0 +1,108 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Pipeline
+
+on:
+  push:
+    branches:
+      - "main"
+
+env:
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+
+      - name: Upgrade NPM
+        run: npm install -g npm
+
+      - run: node -v
+      - run: npm -v
+
+      - run: npm ci
+
+      - name: Setup Git
+        run: git config --global user.name ${{ secrets.GH_USERNAME }} && git config --global user.email ${{ secrets.GH_EMAIL }}
+
+      - name: Change Version
+        uses: reedyuk/npm-version@1.1.1
+        with:
+          version: 'minor'
+          git-tag-version: 'true'
+      
+      - name: Push Changes
+        run: |
+          git config --global user.name ${{ secrets.GH_USERNAME }}
+          git config --global user.email ${{ secrets.GH_EMAIL }}
+          git push
+      - name: Create Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: package
+          path: package.json
+
+  build:
+    needs: version
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: package
+
+      - name: Get current package version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@main
+
+      - name: Write Package Version
+        run: |
+          echo "PACKAGE_VERSION=${{ steps.package-version.outputs.current-version }}" >>${GITHUB_ENV}
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+
+      - name: Upgrade NPM
+        run: npm install -g npm
+
+      - run: node -v
+      - run: npm -v
+
+      - run: npm ci
+
+      - name: Install Dependencies
+        run: npm i
+
+      - name: Build Executeable
+        run: npm run build
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Homestew
+          path: |
+            ./dist/*

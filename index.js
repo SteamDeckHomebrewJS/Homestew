@@ -78,14 +78,15 @@ class Homebrew {
 /**
  * Constants
  */
-const PATH = process.env.ENVIRONMENT === 'development' ? path.join(__dirname, "test") : "/home/deck/homestew";
+const HOME_PATH = process.env.ENVIRONMENT === 'development' ? path.join(__dirname) : process.env.PATH || "/home/deck/homestew";
 const STEAM_BASE = process.env.STEAM_BASE || "http://localhost:8080";
-const PORT = process.env.PORT || 42069;
+const SERVER_PORT = process.env.PORT || 42069;
+const SERVER_HOST = process.env.HOST || "127.0.0.1";
 
 /**
  * Register Homebrew Interface
  */
-const hb = new Homebrew(PATH, STEAM_BASE);
+const hb = new Homebrew(HOME_PATH, STEAM_BASE);
 
 /**
  * Start
@@ -97,7 +98,8 @@ hb.start();
  */
 const app = express();
 app.use(cors({ origin: "*" }));
-app.set("PORT", PORT);
+app.set("PORT", SERVER_PORT);
+app.set("HOST", SERVER_HOST);
 app.set("view engine", "ejs");
 
 /**
@@ -113,7 +115,7 @@ require("./src/server/index")(app, hb);
 /**
  * Start Server
  */
-app.listen(app.get("PORT"), () => {
+app.listen(app.get("PORT"), app.get("HOST"), () => {
     console.log(`Server started on port ${app.get("PORT")}`);
 });
 

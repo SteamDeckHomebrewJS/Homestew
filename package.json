@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "description": "NodeJS Homebrew Software for Steam Deck (Homestew)",
   "main": "index.js",
+  "bin": "index.js",
   "scripts": {
-    "test": "nodemon index.js --config nodemon.json"
+    "test": "nodemon index.js --config nodemon.json",
+    "build": "npx pkg ."
   },
   "author": "SteffTek",
   "license": "Apache-2.0",
@@ -14,5 +16,13 @@
     "ejs": "^3.1.8",
     "express": "^4.18.1",
     "ws": "^8.7.0"
+  },
+  "devDependencies": {
+    "pkg": "^5.7.0"
+  },
+  "pkg": {
+    "assets": ["views/**/*","static/**/*"],
+    "outputPath": "dist",
+    "targets": ["node16-linux-x64"]
   }
 }
