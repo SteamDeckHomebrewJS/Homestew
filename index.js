@@ -95,7 +95,7 @@ class Homebrew {
             // Reinject
             console.log("Reinjecting Code in QuickAccess Menu...");
             quickAccess.injectCode();
-        }, 1000);
+        }, 1000 * 10); // Scan every 10 Seconds
     }
 
     /**
