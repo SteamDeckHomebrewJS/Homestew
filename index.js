@@ -123,7 +123,7 @@ class Homebrew {
 /**
  * Constants
  */
-const HOME_PATH = process.env.ENVIRONMENT === 'development' ? path.join(__dirname) : process.env.PATH || "/home/deck/homestew";
+const HOME_PATH = process.env.ENVIRONMENT === 'development' ? path.join(__dirname) : process.env.HOME_PATH || "/home/deck/homestew";
 const STEAM_BASE = process.env.STEAM_BASE || "http://localhost:8080";
 const SERVER_PORT = process.env.PORT || 42069;
 const SERVER_HOST = process.env.HOST || "127.0.0.1";

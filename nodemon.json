@@ -1,6 +1,6 @@
 {
     "env": {
-        "PATH": "/home/deck/homestew",
+        "HOME_PATH": "/home/deck/homestew",
         "ENVIRONMENT": "development",
         "STEAM_BASE": "http://192.168.178.59:8081",
         "PORT": 8080,

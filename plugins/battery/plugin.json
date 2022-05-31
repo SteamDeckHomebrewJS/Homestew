@@ -1,9 +1,0 @@
-{
-    "name": "DeckBattery",
-    "author": "roedesh",
-    "description": "Show useful information about your decks battery",
-    "version": "0.0.1",
-    "main": "index.js",
-    "view": "index.html",
-    "tile": "tile.html"
-}
