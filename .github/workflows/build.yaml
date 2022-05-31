@@ -8,7 +8,7 @@ name: Pipeline
 on:
   push:
     branches:
-      - "main"
+      - "release"
 
 env:
   IMAGE_NAME: ${{ github.repository }}

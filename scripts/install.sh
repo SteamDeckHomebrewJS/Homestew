@@ -39,5 +39,5 @@ EOM
 
 # Start Service
 systemctl daemon-reload
-systemctl start plugin_loader
-systemctl enable plugin_loader
+systemctl start homestew
+systemctl enable homestew
