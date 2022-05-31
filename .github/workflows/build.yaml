@@ -125,6 +125,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/*
+          asset_path: ./dist/homestew
           asset_name: Homestew
           asset_content_type: application/bin
