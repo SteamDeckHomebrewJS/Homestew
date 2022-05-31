@@ -23,6 +23,7 @@ const Injection = require('./src/injection');
 class Homebrew {
     // Application State
     activePlugin = null;
+    #reinjection = null;
 
     // Resources
     plugins = [];
@@ -43,10 +44,16 @@ class Homebrew {
      */
     async start() {
         // Load tabs
-        const isInjected = await this.injectCode();
-        if (!isInjected) return;
+        await this.injectCode();
         // Load Plugins into tabs
         this.loadPlugins();
+    }
+
+    /**
+     * @description stops homebrew
+     */
+    stop() {
+        clearInterval(this.#reinjection);
     }
 
     /**
@@ -64,10 +71,27 @@ class Homebrew {
 
         // Get Quick Access Tab
         const tab = this.injection.getTab('QuickAccess');
-        if (!tab) { console.log("Tab not found. Make sure Steam Game Mode is running."); return false };
+        if (!tab) {
+            console.log("Tab not found. Make sure Steam Game Mode is running.");
+        } else {
+            // Inject code
+            await tab.inject();
+        };
 
-        // Inject code
-        await tab.inject();
+        /**
+         * Check if code is still injected, if not, reinject
+         */
+        this.#reinjection = setInterval(async () => {
+            // Get Tab
+            const quickAccess = this.injection.getTab("QuickAccess");
+            // Check if Tab is there
+            if(!quickAccess) return;
+            // Check if QuickAccess is still injected
+            const hasElement = await quickAccess.hasElement("plugins");
+            if(hasElement) return;
+            // Reinject
+            quickAccess(this.injectCode());
+        }, 1000);
     }
 
     /**
@@ -103,7 +127,12 @@ const app = express();
 app.use(cors({ origin: "*" }));
 app.set("PORT", SERVER_PORT);
 app.set("HOST", SERVER_HOST);
+
+/**
+ * View Engine Settings
+ */
 app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
 /**
  * Create Static Server
