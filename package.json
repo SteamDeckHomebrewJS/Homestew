@@ -1,6 +1,6 @@
 {
   "name": "steamdeck-homestew",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "NodeJS Homebrew Software for Steam Deck (Homestew)",
   "main": "index.js",
   "bin": "index.js",
@@ -21,8 +21,13 @@
     "pkg": "^5.7.0"
   },
   "pkg": {
-    "assets": ["views/**/*","static/**/*"],
+    "assets": [
+      "views/**/*",
+      "static/**/*"
+    ],
     "outputPath": "dist",
-    "targets": ["node16-linux-x64"]
+    "targets": [
+      "node16-linux-x64"
+    ]
   }
 }
