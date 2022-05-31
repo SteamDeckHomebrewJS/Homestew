@@ -36,4 +36,17 @@ module.exports = (app, homebrew) => {
         // Send
         res.send(result);
     });
+
+    /**
+     * @description custom_fonts endpoint redirection
+     */
+    app.get("/custom_fonts/*", async (req, res) => {
+        // Get Tab
+        const tab = homebrew.injection.getTab("QuickAccess");
+        if(!tab) return res.status(404).send("QuickAccess Menu not found.");
+        // Get Resource
+        const result = await tab.getSteamResource(req.url);
+        // Send
+        res.send(result);
+    });
 }
