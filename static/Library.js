@@ -5,18 +5,6 @@
  */
 
 /**
- * Refresh current View
- */
-const refreshView = async () => {
-    // Get iframe
-    let iframe = document.getElementById("plugins");
-    // Check
-    if(!iframe) return;
-    // Refresh iframe
-    iframe.contentWindow.body.innerHTML = fetch(`${getBaseURL()}`).then(res => res.text());
-}
-
-/**
  * Get Current Plugin
  */
 const getCurrentPlugin = () => {
