@@ -59,9 +59,12 @@ class Homebrew {
         this.injection = new Injection(this.steamBase);
         await this.injection.loadTabs();
 
+        // Log
+        console.log("Getting QuickAccess Tab...")
+
         // Get Quick Access Tab
         const tab = this.injection.getTab('QuickAccess');
-        if (!tab) return false;
+        if (!tab) { console.log("Tab not found. Make sure Steam Game Mode is running."); return false };
 
         // Inject code
         await tab.inject();
@@ -105,7 +108,8 @@ app.set("view engine", "ejs");
 /**
  * Create Static Server
  */
-app.use(express.static("static"));
+app.use(express.static(path.join(__dirname, 'static')));
+app.use(express.static(path.join(__dirname, 'views')));
 
 /**
  * Implement Router

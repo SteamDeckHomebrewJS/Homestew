@@ -38,6 +38,7 @@ module.exports = class Injection {
 
         // Get tabs
         data.forEach(tabData => {
+            console.log(`Processing Tab ${tabData.title}`);
             // Create new Tab
             const tab = new Tab(tabData.id, tabData.type, tabData.title, tabData.url, tabData.webSocketDebuggerUrl);
             // Append to tabs
