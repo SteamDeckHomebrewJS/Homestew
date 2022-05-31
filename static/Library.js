@@ -12,7 +12,7 @@ const getCurrentPlugin = () => {
 }
 
 const getBaseURL = () => {
-    return BASE_URL || "http://127.0.0.1:42069";
+    return "/plugins";
 }
 
 /**

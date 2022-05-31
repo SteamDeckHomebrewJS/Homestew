@@ -7,10 +7,10 @@
         <!-- Init Script needed for identifying Plugins -->
         <script>
             // Set Plugin Name for the current page
-            const PLUGIN_NAME = <%= plugin.NAME %>;
+            const PLUGIN_NAME = "<%= plugin.getName() %>";
         </script>
     </head>
     <body style="height: fit-content; display: block;">
-        <%- plugin.OUTPUT %>
+        <%- plugin.getView() %>
     </body>
 </html>

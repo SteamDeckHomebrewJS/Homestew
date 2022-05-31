@@ -16,6 +16,7 @@ const express = require('express');
  */
 const PluginBase = require('./lib/PluginBase.js');
 const Injection = require('./src/injection');
+const PluginManager = require('./src/plugins/index.js');
 
 /**
  * Homebrew Interface
@@ -26,8 +27,8 @@ class Homebrew {
     #reinjection = null;
 
     // Resources
-    plugins = [];
-    injection = null;
+    #injection = null;
+    #pluginManager = null;
 
     /**
      * Constructor
@@ -40,13 +41,24 @@ class Homebrew {
     }
 
     /**
-     * @description starts the homebrew
+     * Getter
      */
-    async start() {
+    getPluginManager() {
+        return this.#pluginManager;
+    }
+    getInjection() {
+        return this.#injection;
+    }
+
+    /**
+     * @description starts the homebrew
+     * @param {object} expressApp express app
+     */
+    async start(expressApp) {
         // Load tabs
         await this.injectCode();
         // Load Plugins into tabs
-        this.loadPlugins();
+        this.loadPlugins(expressApp);
     }
 
     /**
@@ -63,14 +75,14 @@ class Homebrew {
         /**
          * Inject into Steam Deck dev console
          */
-        this.injection = new Injection(this.steamBase);
-        await this.injection.loadTabs();
+        this.#injection = new Injection(this.steamBase);
+        await this.#injection.loadTabs();
 
         // Log
         console.log("Getting QuickAccess Tab...")
 
         // Get Quick Access Tab
-        const tab = this.injection.getTab('QuickAccess');
+        const tab = this.#injection.getTab('QuickAccess');
         if (!tab) {
             console.log("Tab not found. Make sure Steam Game Mode is running.");
         } else {
@@ -84,9 +96,9 @@ class Homebrew {
         this.#reinjection = setInterval(async () => {
             // Fetching Tabs
             console.log("Fetching tabs...");
-            await this.injection.loadTabs();
+            await this.#injection.loadTabs();
             // Get Tab
-            const quickAccess = this.injection.getTab("QuickAccess");
+            const quickAccess = this.#injection.getTab("QuickAccess");
             // Check if Tab is there
             if(!quickAccess) return;
             // Check if QuickAccess is still injected
@@ -100,9 +112,11 @@ class Homebrew {
 
     /**
      * @description Loads all plugins
+     * @param {object} expressApp express app
      */
-    loadPlugins() {
-
+    loadPlugins(expressApp) {
+        this.#pluginManager = new PluginManager(this.path, expressApp);
+        this.#pluginManager.loadPlugins();
     }
 }
 
@@ -118,11 +132,6 @@ const SERVER_HOST = process.env.HOST || "127.0.0.1";
  * Register Homebrew Interface
  */
 const hb = new Homebrew(HOME_PATH, STEAM_BASE);
-
-/**
- * Start
- */
-hb.start();
 
 /**
  * Create Express Server
@@ -148,6 +157,11 @@ app.use(express.static(path.join(__dirname, 'views')));
  * Implement Router
  */
 require("./src/server/index")(app, hb);
+
+/**
+ * Start Homebrew
+ */
+hb.start(app);
 
 /**
  * Start Server

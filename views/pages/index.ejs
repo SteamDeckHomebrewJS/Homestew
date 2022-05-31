@@ -23,9 +23,16 @@
         <% } %>
         <div class="quickaccessmenu_AllTabContents_2yKG4 quickaccessmenu_Down_3rR0o">
             <div class="quickaccessmenu_ContentTransition_32AON quickaccessmenu_ActiveTab_oIVg-">
-            <!-- Test Plugin -->
-            <div class="quickaccesscontrols_PanelSectionRow_2VQ88"><div class="gamepaddialog_Field_S-_La gamepaddialog_WithFirstRow_qFXi6 gamepaddialog_WithChildrenBelow_1u5FT gamepaddialog_VerticalAlignCenter_3XNvA gamepaddialog_InlineWrapShiftsChildrenBelow_pHUb6 gamepaddialog_WithBottomSeparatorStandard_3s1Rk gamepaddialog_ChildrenWidthFixed_1ugIU gamepaddialog_ExtraPaddingOnChildrenBelow_5UO-_ gamepaddialog_StandardPadding_XRBFu gamepaddialog_HighlightOnFocus_wE4V6 Panel Focusable" style="--indent-level:0;"><div class="gamepaddialog_FieldLabelRow_H9WOq"><div class="gamepaddialog_FieldLabel_3b0U-">Stufe des Leistungs-Overlay</div></div><div class="gamepaddialog_FieldChildren_14_HB"><div class="gamepadslider_SliderControlWithIcon_2M8Pt Panel Focusable"><div class="gamepadslider_SliderControlPanelGroup_MY8iY Panel Focusable" tabindex="0"><div class="gamepadslider_SliderControlAndNotches_1Cccx Focusable" tabindex="0" style="--normalized-slider-value:1;"><div class="gamepadslider_SliderControl_3o137"><div class="gamepadslider_SliderTrack_Mq25N gamepadslider_SliderHasNotches_2XiAy "></div><div class="gamepadslider_SliderHandleContainer_1pQZi"><div class="gamepadslider_SliderHandle_2yVKj"></div></div></div><div class="gamepadslider_SliderNotchContainer_2N-a5 Panel Focusable"><div class="gamepadslider_SliderNotch_3x6ve"><div class="gamepadslider_SliderNotchTick_Fv1Ht gamepadslider_TickActive_1gnUV"></div><div class="gamepadslider_SliderNotchLabel_u_sH1">aus</div></div><div class="gamepadslider_SliderNotch_3x6ve"><div class="gamepadslider_SliderNotchTick_Fv1Ht gamepadslider_TickActive_1gnUV"></div><div class="gamepadslider_SliderNotchLabel_u_sH1">1</div></div><div class="gamepadslider_SliderNotch_3x6ve"><div class="gamepadslider_SliderNotchTick_Fv1Ht gamepadslider_TickActive_1gnUV"></div><div class="gamepadslider_SliderNotchLabel_u_sH1">2</div></div><div class="gamepadslider_SliderNotch_3x6ve"><div class="gamepadslider_SliderNotchTick_Fv1Ht gamepadslider_TickActive_1gnUV"></div><div class="gamepadslider_SliderNotchLabel_u_sH1">3</div></div><div class="gamepadslider_SliderNotch_3x6ve"><div class="gamepadslider_SliderNotchTick_Fv1Ht gamepadslider_TickActive_1gnUV"></div><div class="gamepadslider_SliderNotchLabel_u_sH1">4</div></div></div></div></div></div></div></div></div>
-            </div>
+            <!-- Render Plugins -->
+            <% for(let plugin of plugins) { %>
+                <div class="quickaccesscontrols_PanelSectionRow_26R5w">
+                    <div onclick="window.location.href='/plugins/<%- plugin.getName() %>'" class="basicdialog_Field_ugL9c basicdialog_WithChildrenBelow_1RjOd basicdialog_InlineWrapShiftsChildrenBelow_3a6QZ basicdialog_ExtraPaddingOnChildrenBelow_2-owv basicdialog_StandardPadding_1HrfN basicdialog_HighlightOnFocus_1xh2W Panel Focusable" style="--indent-level:0; margin: 0px; padding: 0px; padding-top: 8px;">
+                        <div class="basicdialog_FieldChildren_279n8">
+                            <button type="button" tabindex="0" class="DialogButton _DialogLayout Secondary basicdialog_Button_1Ievp Focusable"><%= plugin.getName() %></button>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
         </div>
     </body>
 </html>

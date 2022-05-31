@@ -13,21 +13,16 @@ module.exports = (app, homebrew) => {
     app.get('/', (req, res) => {
         // Render EJS Index File
         res.render("pages/index", {
-            plugins: []
+            plugins: homebrew.getPluginManager().getPlugins()
         });
     });
-
-    /**
-     * @description Plugin Management
-     */
-
 
     /**
      * @description Get Steam Resources from QuickAccess Tab
      */
     app.get("/steam/*", async (req, res) => {
         // Get Tab
-        const tab = homebrew.injection.getTab("QuickAccess");
+        const tab = homebrew.getInjection().getTab("QuickAccess");
         if(!tab) return res.status(404).send("QuickAccess Menu not found.");
         // Get Route without /steam
         const resource = req.url.replace("/steam", "");
@@ -42,7 +37,7 @@ module.exports = (app, homebrew) => {
      */
     app.get("/custom_fonts/*", async (req, res) => {
         // Get Tab
-        const tab = homebrew.injection.getTab("QuickAccess");
+        const tab = homebrew.getInjection().getTab("QuickAccess");
         if(!tab) return res.status(404).send("QuickAccess Menu not found.");
         // Get Resource
         const result = await tab.getSteamResource(req.url);
