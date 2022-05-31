@@ -12,7 +12,9 @@ module.exports = (app, homebrew) => {
      */
     app.get('/', (req, res) => {
         // Render EJS Index File
-        res.render("pages/index");
+        res.render("pages/index", {
+            plugins: []
+        });
     });
 
     /**
