@@ -17,16 +17,28 @@ module.exports = class Plugin {
 
     #folder = null;
     #name = null;
+    #author = null;
+    #description = null;
     #version = null;
+    #license = null;
     #valid = false;
 
+    #router = null;
     #instance = null;
 
     constructor(json, folder) {
+        // Backup
         this.#json = json;
         this.#folder = folder;
+
+        // Main Meta Data
         this.#name = json.name?.toString();
         this.#version = json.version?.toString();
+
+        // Other Meta
+        this.#author = json.author || "";
+        this.#description = json.description || "";
+        this.#license = json.license || "";
 
         // Check if valid
         this.#valid = this.#name && this.#version;
@@ -70,8 +82,20 @@ module.exports = class Plugin {
         return this.#mainHtml;
     }
 
+    getRouter() {
+        return this.#router;
+    }
+
     getInstance() {
         return this.#instance;
+    }
+
+    /**
+     * Set ExpressJS router
+     * @param {object} router expressjs router
+     */
+    setRouter(router) {
+        this.#router = router;
     }
 
     /**
@@ -84,5 +108,14 @@ module.exports = class Plugin {
         if (this.#executable) {
             this.#instance = new this.#executable();
         }
+    }
+
+    /**
+     * @override Stop Plugin
+     */
+    stop() {
+        // Stop Plugin, to overwrite
+        if(this.#instance) return;
+        this.#instance.stop();
     }
 }

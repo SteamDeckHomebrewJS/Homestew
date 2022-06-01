@@ -1,6 +1,3 @@
 # Changelog
 ## New
-- WIP
-
-## Fixed
-- WIP
+- Plugin Reload
