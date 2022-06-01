@@ -15,6 +15,11 @@ const getBaseURL = () => {
     return "/plugins";
 }
 
+const back = () => {
+    // Go Back on Page in History
+    history.back();
+}
+
 /**
  * Make a GET request to the plugin
  * @returns {Promise<any>} request
