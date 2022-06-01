@@ -13,6 +13,8 @@
     <body style="height: fit-content; display: block;" class="quickaccessmenu_PanelOuterNav_2BB6u Panel Focusable">
         <!-- Title -->
         <div class="quickaccessmenu_Title_34nl5">Homestew</div>
+        <!-- Spacer -->
+        <div style="width: 100%; height: 2px; background-color: rgba(255,255,255,0.1); margin: 5px 0px;"></div>
         <!-- Plugin Shell -->
         <% if(!plugins?.length) { %>
             <div class="quickaccessmenu_TabGroupPanel_1QO7b Panel Focusable">
@@ -22,13 +24,15 @@
             </div>
         <% } %>
         <div class="quickaccessmenu_AllTabContents_2yKG4 quickaccessmenu_Down_3rR0o">
-            <div class="quickaccessmenu_ContentTransition_32AON quickaccessmenu_ActiveTab_oIVg-">
+            <div class="quickaccessmenu_ContentTransition_32AON quickaccessmenu_ActiveTab_oIVg-" style="display: flex; justify-content: flex-start; align-items: flex-start; flex-wrap: wrap;">
             <!-- Render Plugins -->
             <% for(let plugin of plugins) { %>
-                <div class="quickaccesscontrols_PanelSectionRow_26R5w">
+                <div class="quickaccesscontrols_PanelSectionRow_26R5w" style="margin: 5px;">
                     <div onclick="window.location.href='/plugins/<%- plugin.getName() %>'" class="basicdialog_Field_ugL9c basicdialog_WithChildrenBelow_1RjOd basicdialog_InlineWrapShiftsChildrenBelow_3a6QZ basicdialog_ExtraPaddingOnChildrenBelow_2-owv basicdialog_StandardPadding_1HrfN basicdialog_HighlightOnFocus_1xh2W Panel Focusable" style="--indent-level:0; margin: 0px; padding: 0px; padding-top: 8px;">
                         <div class="basicdialog_FieldChildren_279n8">
-                            <button type="button" tabindex="0" class="DialogButton _DialogLayout Secondary basicdialog_Button_1Ievp Focusable"><%= plugin.getName() %></button>
+                            <button type="button" tabindex="0" class="DialogButton _DialogLayout Secondary basicdialog_Button_1Ievp Focusable" style="font-weight: bold; font-size: larger; padding: 10px; border-radius: 4px; width: 75px; height: 75px;">
+                                <%- plugin.getTile ? plugin.getTile() : plugin.getName() %>
+                            </button>
                         </div>
                     </div>
                 </div>
