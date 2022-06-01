@@ -1,6 +1,6 @@
 {
   "name": "homestew",
-  "version": "0.20.1",
+  "version": "0.20.2",
   "description": "NodeJS Homebrew Software for Steam Deck (Homestew)",
   "main": "index.js",
   "bin": "index.js",
