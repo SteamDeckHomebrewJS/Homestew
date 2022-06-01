@@ -11,6 +11,8 @@ const express = require('express');
 const Plugin = require("./Plugin.js");
 const path = require('path');
 const fs = require('fs');
+const removeRoute = require("../utils/removeRoute");
+
 module.exports = class PluginManager {
     // State
     #plugins = [];
@@ -52,6 +54,23 @@ module.exports = class PluginManager {
     }
 
     /**
+     * Reload Plugins
+     */
+    reload() {
+        // Remove all Routes & Stop Plugin
+        this.#plugins.forEach(plugin => {
+            plugin.stop();
+            this.removeRoutes(plugin);
+        });
+
+        // Unload all Plugins
+        this.#plugins = [];
+
+        // Load all Plugins
+        this.loadPlugins();
+    }
+
+    /**
      * Load Plugin
      */
     loadPlugin(name) {
@@ -87,6 +106,10 @@ module.exports = class PluginManager {
             plugin.getInstance().routes(router);
             // Create Tile View
             router.get("/tile", (req, res) => { res.type("html").send(plugin.getTile()) });
+
+            // Append Router to Plugin for easy access
+            plugin.setRouter(router);
+
             // Create View
             // Render EJS Index File
             this.app.get(`/plugins/${plugin.getName()}`, (req, res) => {
@@ -97,5 +120,18 @@ module.exports = class PluginManager {
             // Add Router to Express App
             this.app.use(`/plugins/${plugin.getName()}`, router);
         });
+    }
+
+    /**
+     * Removes Routes from Plugin
+     * @param {Plugin} plugin 
+     */
+    removeRoutes(plugin) {
+        // Check if plugin has router
+        if(!plugin.getRouter());
+        // Remove All Plugin Routes
+        removeRoute(plugin.getRouter(), "/*");
+        // Remove Plugin View
+        removeRoute(this.app, `/plugins/${plugin.getName()}`)
     }
 }

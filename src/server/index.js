@@ -18,6 +18,16 @@ module.exports = (app, homebrew) => {
     });
 
     /**
+     * Reload Plugins
+     */
+    app.get("/reload", (req, res) => {
+        // To the reloady thingi
+        homebrew.getPluginManager().reload();
+        // Send response
+        res.send("Lmao")
+    });
+
+    /**
      * @description Get Steam Resources from QuickAccess Tab
      */
     app.get("/steam/*", async (req, res) => {
