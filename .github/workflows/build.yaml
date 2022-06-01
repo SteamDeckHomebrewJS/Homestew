@@ -43,7 +43,7 @@ jobs:
       - name: Change Version
         uses: reedyuk/npm-version@1.1.1
         with:
-          version: 'minor'
+          version: 'patch'
           git-tag-version: 'true'
       
       - name: Push Changes
